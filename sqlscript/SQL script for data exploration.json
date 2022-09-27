@@ -1,0 +1,17 @@
+{
+	"name": "SQL script for data exploration",
+	"properties": {
+		"content": {
+			"query": "CREATE EXTERNAL DATA SOURCE NeeshaDataLake\nWITH ( LOCATION = 'https://neeshagen2dls.blob.core.windows.net')\n\nSELECT\n    TOP 100 *\nFROM\n    OPENROWSET(\n            BULK '/neeshafscontainer/NYCTripSmall.parquet',\n            DATA_SOURCE = 'NeeshaDataLake',\n            FORMAT='PARQUET'\n    ) AS [result]\n\nCREATE LOGIN data_explorer WITH PASSWORD = 'neesha@1234';\nCREATE USER data_explorer FOR LOGIN data_explorer; GO GRANT ADMINISTER DATABASE BULK OPERATIONS TO data_explorer; ",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "DataExplorationDB",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
